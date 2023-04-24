@@ -1,0 +1,5 @@
+negro: 20,20,20
+gris: 333533
+amarillo fuerte: ffd100
+amarillo claro: ffee32
+gris muy claro: d6d6d6
