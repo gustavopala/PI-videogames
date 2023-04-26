@@ -2,7 +2,7 @@ const validate = (game, errorsState) => {
     const errors = { ...errorsState };
 
     if (!game.name) errors.name = "este campo es obligatorio";
-    else if (!/^[a-zA-Z0-9]+$/.test(game.name))
+    else if (!/^[a-zA-Z0-9\s]+$/.test(game.name))
     errors.name = "no se admiten simbolos";
     else errors.name = "";
     

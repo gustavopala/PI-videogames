@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Cards from "../componentes/Cards";
 const PAGE_SIZE = 15;
 
+
 const Div = styled.div`
 display: flex;
 flex-wrap: wrap;
@@ -20,7 +21,7 @@ flex-wrap: wrap;
 background-color: #333533;
 flex-direction: row;
 height: 100%;
-width: 1010px;
+width: 900px;
 `;
 const DivPage = styled.div`
 padding: 20px;
@@ -73,9 +74,9 @@ export default function Home() {
         };
         <DivPage>
           {[...Array(Math.ceil(games.length / PAGE_SIZE)).keys()].map(page => (
-            <button key={page} onClick={() => handlePageChange(page + 1)}>
+            <BotonPagina key={page} onClick={() => handlePageChange(page + 1)} active={page + 1 === currentPage}>
               {page + 1}
-            </button>
+            </BotonPagina>
           ))}
         </DivPage>
       </DivCards>

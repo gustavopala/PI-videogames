@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {  useLocation } from 'react-router-dom';
 
 const Div = styled.div`
 margin-top: 0px;
@@ -38,11 +39,13 @@ font-family: Inter,sans-serif;
 `;
 
 function BotonesNav({ handleChange, handleChan, handleChangeOrdenAlfa,handleChangeOrdenRat}) {
+  const location = useLocation([]);
   return (
     <>
     <Div>
       <H1>FILTROS</H1>
-      <Boton> <Select name="filtroGenero" id="" onChange={handleChange}>
+      {location.pathname === '/home' &&
+        <Boton> <Select name="filtroGenero" id="" onChange={handleChange}>
                     <option value="">Seleccionar género</option>
                     <option value="Action">Action</option>
                     <option value="Indie">Indie</option>
@@ -63,7 +66,7 @@ function BotonesNav({ handleChange, handleChan, handleChangeOrdenAlfa,handleChan
                     <option value="Games">Games</option>
                     <option value="Educational">Educational</option>
                     <option value="Card">Card</option>
-                </Select></Boton>
+                </Select></Boton>}
                 <Boton> <Select name="filtroOrigen" id="" onChange={handleChan}>
                     <option value="">Seleccionar origen</option>
                     <option value="Api">Api</option>

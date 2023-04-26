@@ -6,7 +6,7 @@ import { getGames } from "../redux/actions";
 import InputsForm from '../componentes/InputsForm';
 import styled from "styled-components";
 import emptyImage from "../imagenes/guardadoForm.png";
-
+import emptyImage2 from "../imagenes/errorForm.png";
 const URL_BASE = "http://localhost:3001/";
 
 const DivCreado = styled.div`
@@ -16,6 +16,15 @@ height: 100px;
 margin-left: 400px;
 margin-top: 20px;
 border: 3px solid #27B516;
+border-radius: 20px;
+`;
+const DivError = styled.div`
+position: relative;
+width: 400px;
+height: 100px;
+margin-left: 400px;
+margin-top: 20px;
+border: 3px solid #DF0F0F;
 border-radius: 20px;
 `;
 
@@ -30,12 +39,38 @@ font-family: Arial, sans-serif;
 line-height: 23px;
 font-weight: bold;
 text-align: left;
-color: #27B516;
+color: white;
 `;
 const Img = styled.img`
 position: absolute;
 left: 80px;
 bottom: 20px;
+`;
+const Span2 = styled.span`
+position: absolute;
+left: 160px;
+width: 150px;
+bottom: 25px;
+font-weight: 400;
+font-size: 16px;
+font-family: Arial, sans-serif;
+line-height: 23px;
+font-weight: bold;
+text-align: left;
+color: white;
+`;
+const Button = styled.button`
+width: 300px;
+height: 50px;
+margin-top: 20px;
+margin-bottom: 20px;
+font-size: 16px;
+font-family: Arial, sans-serif;
+line-height: 23px;
+font-weight: bold;
+background-color: ${props => props.complete ? '#ffd100' : '#202020'};
+color: white;
+transition: background-color 0.3s ease-in-out;
 `;
 function FormCreate() {
   const dispatch = useDispatch();
@@ -54,6 +89,7 @@ function FormCreate() {
   const [formComplete, setFormComplete] = useState(false);
   const [gameCreated, setGameCreated] = useState(false);
   const [gameError, setGameError] = useState(true);
+  const [nameError, setnameError] = useState(true);
  
   useEffect(() => {
 
@@ -153,15 +189,15 @@ function FormCreate() {
         parent_platforms,
         genre
       });
-      console.log(response.data);
       dispatch(getGames());
       setGameCreated(true);
       setGameError(true);
+      setnameError(true);
       cleanStateGame();
     } catch (error) {
-      console.error(error);
       setGameCreated(false);
-      setGameError(false);
+      (error=='El juego ya existe!')&& setGameError(false);
+      setnameError(false);
     }
   }
 
@@ -188,10 +224,14 @@ function FormCreate() {
             <Img src={emptyImage} alt="No characters available" />
             <Span>Juego creado correctamente</Span>
           </DivCreado>}
-        {!gameError && <h1>Error al crear el formulario</h1>}
-        <button type="submit" disabled={!formComplete}>
+        {!gameError && 
+        <DivError>
+            <Img src={emptyImage2} alt="No characters available" />
+            <Span2>{nameError? 'Error! revise el formulario':'Error! el juego ya existe'}</Span2>
+          </DivError>}
+        <Button type="submit" disabled={!formComplete} complete={formComplete}>
           Crear juego
-        </button>
+        </Button>
       </form> 
     </div>
   )

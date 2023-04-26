@@ -48,8 +48,6 @@ margin-left: 15px;
 margin-top: 15px;
 outline: none;
 
-
-
 @media screen and (max-width: 280px) {
    width: 190px;
  }
@@ -95,12 +93,16 @@ export default function Home() {
     const handleChangeOrdenRat = (event) => {
         dispatch(ordenPorRat(event.target.value))
     }
+    const backHome = () =>{
+        dispatch(stateClean())
+        dispatch(getGames());
+    }
     return (
         <Container>
 
             <Div>
                 <SearchBar />
-                <Button onClick={() => dispatch(getGames())}>
+                <Button onClick={() => backHome()}>
                     <LinkStyle to='/home' >
                     <Img src={emptyImage} alt="No characters available" />
                     HOME
@@ -112,7 +114,7 @@ export default function Home() {
                     CREAR JUEGO
                     </LinkStyle>
                 </Button>
-                {location.pathname === '/home' &&
+                {(location.pathname === '/home'|| location.pathname === '/search') &&
                 <Div2>
 
                     <BotonesNav

@@ -8,16 +8,13 @@ const initialState = {
 
 
 const reducer = (state = initialState, action) => {
-  
-    
     switch (action.type) {
         case GET_GAMES:
             return { ...state, myGames: action.payload, allGames: action.payload };
         case SEARCH_GAMES:
-            return { ...state, myGames: action.payload };
+            return { ...state, myGames: action.payload.slice(0,25), allGames: action.payload.slice(0,20) };
         case FILTER_GENRE:
-            
-            return {...state, myGames: action.payload,allGames: action.payload};
+            return {...state, myGames: action.payload, allGames: action.payload};
         case FILTER_ORIGEN:
             const { myGames } = state;
             if('Api' === action.payload){
@@ -54,7 +51,7 @@ const reducer = (state = initialState, action) => {
                 allGames: ratingGames
             }
         case STATE_CLEAN:
-            return {...state, myGames: action.payload,} 
+            return { allGames: action.payload,} 
         default:
             return { ...state };
     }
