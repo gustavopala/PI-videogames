@@ -7,9 +7,8 @@ const addVideoGame = async (req, res) => {
     const game = await Videogame.findOne({ where: { name: name } });
     if (game) {
       throw new Error("El juego ya existe!");
-      // El juego ya existe en la base de datos, se puede mostrar un mensaje de error o realizar alguna otra acción
     } else {
-      // El juego no existe en la base de datos, se puede crear un nuevo registro con los datos proporcionados
+
       newgame = await Videogame.create({ name, description, released, background_image, background_image_additional, rating, parent_platforms });
     }
     if (typeof genre === 'object') {

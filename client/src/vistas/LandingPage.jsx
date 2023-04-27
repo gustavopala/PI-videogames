@@ -21,8 +21,8 @@ width: 400px;
 height: 60px;
 border: none;
 border-radius: 4px;
-background-color: #202020;
-color: white;
+background-color: #d6d6d6;
+color: #202020;
 transition: background-color 0.3s ease-in-out;
   
   &:hover {
@@ -32,7 +32,7 @@ transition: background-color 0.3s ease-in-out;
 const DivText = styled.div`
 z-index: 4;
 position: absolute;
-background-color: #d6d6d6;
+background-color: #202020;
 left: 0%;
 top: 0%;
 width: 650px;
@@ -50,7 +50,7 @@ opacity: 0.9;
 const H1 = styled.h1`
 z-index: 2;
 position: absolute;
-color: #202020;
+color: white;
 left: 60px;
 right: 60px;
 top: 150px;
@@ -64,7 +64,7 @@ text-align: left;
 const H4 = styled.h4`
 position: absolute;
 z-index: 3;
-color: #202020;
+color: white;
 left: 60px;
 right: 50px;
 top: 260px;

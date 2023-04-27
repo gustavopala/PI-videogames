@@ -17,11 +17,14 @@ margin-left: 280px;
 export default function Busqueda() {
   const [isLoading, setIsLoading] = useState(true);
   const gamesToDisplay = useSelector(state => state.allGames);
-
   useEffect(() => {
-    setIsLoading(false);
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
   
+    return () => clearTimeout(timeoutId);
   }, [gamesToDisplay]);
+
 
 
   return (

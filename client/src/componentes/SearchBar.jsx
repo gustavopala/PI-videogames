@@ -52,7 +52,7 @@ export default function SearchBar() {
    return (
       <InputWrapper>
          <Input type='search' value={name} onChange={handlechage} placeholder="Buscar juegos..."/>
-         <Button onClick={onsearch}><i className="material-icons">search</i></Button>
+         <Button onClick={onsearch}>search</Button>
       </InputWrapper>
    );
 }

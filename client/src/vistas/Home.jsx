@@ -39,7 +39,12 @@ export default function Home() {
   const games = useSelector(state => state.allGames);
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    setIsLoading(false);
+    setIsLoading(true);
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  
+    return () => clearTimeout(timeoutId);
   }, [games]);
 
 

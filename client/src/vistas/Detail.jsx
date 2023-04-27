@@ -32,9 +32,12 @@ export default function Detail() {
                   <CardDetail id={id} 
                   background_image={background_image} 
                   background_image_additional={background_image_additional} 
-                  description={description} name={name} genres={genres} 
+                  description={description} 
+                  name={name} 
+                  genres={genres} 
                   parent_platforms={parent_platforms} 
-                  rating={rating} released={released}/>     
+                  rating={rating} 
+                  released={released}/>     
                 )
             }
         </div>

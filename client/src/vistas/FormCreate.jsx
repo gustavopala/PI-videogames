@@ -106,7 +106,7 @@ function FormCreate() {
     } else {
       setFormComplete(false);
     }
-  }, [game]);
+  }, [game,nameError]);
 
   const handlechage = (event) => {
     setGame({
@@ -195,9 +195,10 @@ function FormCreate() {
       setnameError(true);
       cleanStateGame();
     } catch (error) {
+      setGameError(false);
+      (error.response.data.error=='El juego ya existe!')&& setnameError(false);
+      (error.response.data.error!='El juego ya existe!')&& setnameError(true);
       setGameCreated(false);
-      (error=='El juego ya existe!')&& setGameError(false);
-      setnameError(false);
     }
   }
 

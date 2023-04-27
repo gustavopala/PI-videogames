@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
         case GET_GAMES:
             return { ...state, myGames: action.payload, allGames: action.payload };
         case SEARCH_GAMES:
-            return { ...state, myGames: action.payload.slice(0,25), allGames: action.payload.slice(0,20) };
+            return { ...state, myGames: action.payload.slice(0,20), allGames: action.payload.slice(0,20) };
         case FILTER_GENRE:
             return {...state, myGames: action.payload, allGames: action.payload};
         case FILTER_ORIGEN:
