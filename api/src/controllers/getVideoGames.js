@@ -9,7 +9,7 @@ const getVideoGames = async (req, res) => {
   try {
     const { search } = req.query;
     let gamesApi = [];
-    let gamesDbClean;
+    let gamesDbClean=[];
 
     if (search) {
       const [apiResponse, dbResponse] = await Promise.all([
@@ -19,11 +19,15 @@ const getVideoGames = async (req, res) => {
           include: Genre
         })
       ]);
-
+      //api
       const apiGames = infoClean(apiResponse.data.results);
+      const apiFilter = apiGames.filter(game => game.name.toLowerCase() === search.toLowerCase());
+      gamesApi = gamesApi.concat(apiFilter);
+      const apiNoExacto = apiGames.filter(game=>game.name.toLowerCase()!=search.toLowerCase())
+      gamesApi = gamesApi.concat(apiNoExacto); 
+      //db
       const dbGames = dbClean(dbResponse);
-      gamesApi = gamesApi.concat(apiGames);
-      gamesDbClean = dbGames;
+      gamesDbClean = gamesDbClean.concat(dbGames);
     } else {
       const apiRequests = [];
       for (let page = 1; page <= 5; page++) {
@@ -36,7 +40,8 @@ const getVideoGames = async (req, res) => {
       gamesApi = gamesApi.concat(apiGames);
 
       const dbResponse = await Videogame.findAll({ include: Genre });
-      gamesDbClean = dbClean(dbResponse);
+      const dbgames = dbClean(dbResponse)
+      gamesDbClean = gamesDbClean.concat(dbgames);
     }
 
     const response = [...gamesDbClean, ...gamesApi].slice(0, 100);

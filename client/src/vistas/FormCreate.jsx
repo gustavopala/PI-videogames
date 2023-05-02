@@ -1,4 +1,4 @@
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import validate from "../componentes/validate";
 import axios from 'axios';
 import { useDispatch } from "react-redux";
@@ -90,23 +90,56 @@ function FormCreate() {
   const [gameCreated, setGameCreated] = useState(false);
   const [gameError, setGameError] = useState(true);
   const [nameError, setnameError] = useState(true);
- 
-  useEffect(() => {
+  const [completeNameRat, setCompleteNameRat] = useState(false);
+  const [completeImage, setCompleteImage] = useState(false);
+  const [completeGenreYPlat, setCompleteGenreYPlat] = useState(false);
 
+  useEffect(() => {
+    if (game.name &&
+      game.description &&
+      game.released &&
+      game.rating &&
+      nameError &&
+      !errors.name &&
+      !errors.rating &&
+      !errors.released &&
+      !errors.description
+      ) {
+      setCompleteNameRat(true)
+    } else {
+      setCompleteNameRat(false)
+    }
+    if (
+      game.background_image &&
+      game.background_image_additional
+    ) {
+      setCompleteImage(true)
+    } else {
+      setCompleteImage(false)
+    }
+    if (game.parent_platforms.length > 0 &&
+      game.genre.length > 0) {
+      setCompleteGenreYPlat(true)
+    } else {
+      setCompleteGenreYPlat(false)
+    }
     if (
       game.name &&
       game.description &&
       game.released &&
-      game.background_image &&
       game.rating &&
+      game.background_image &&
+      game.background_image_additional &&
       game.parent_platforms.length > 0 &&
       game.genre.length > 0
     ) {
       setFormComplete(true);
-    } else {
-      setFormComplete(false);
     }
-  }, [game,nameError]);
+    else {
+      setFormComplete(false);
+
+    }
+  }, [game, nameError]);
 
   const handlechage = (event) => {
     setGame({
@@ -164,7 +197,7 @@ function FormCreate() {
       });
     }
   };
-  const cleanStateGame = () =>{
+  const cleanStateGame = () => {
     setGame({
       name: '',
       description: '',
@@ -196,8 +229,8 @@ function FormCreate() {
       cleanStateGame();
     } catch (error) {
       setGameError(false);
-      (error.response.data.error=='El juego ya existe!')&& setnameError(false);
-      (error.response.data.error!='El juego ya existe!')&& setnameError(true);
+      (error.response.data.error == 'El juego ya existe!') && setnameError(false);
+      (error.response.data.error != 'El juego ya existe!') && setnameError(true);
       setGameCreated(false);
     }
   }
@@ -208,8 +241,9 @@ function FormCreate() {
     if (formComplete) {
       createGame(game);
     }
-    
+
   }
+
 
   return (
     <div>
@@ -218,22 +252,23 @@ function FormCreate() {
           handlechage={handlechage}
           handleGenreClick={handleGenreClick}
           handlePlatformClick={handlePlatformClick}
-          game={game} errors={errors} 
-          />
-        {gameCreated && 
+          game={game} errors={errors} completeNameRat={completeNameRat}
+          completeImage={completeImage} completeGenreYPlat={completeGenreYPlat}
+        />
+        {gameCreated &&
           <DivCreado>
             <Img src={emptyImage} alt="No characters available" />
             <Span>Juego creado correctamente</Span>
           </DivCreado>}
-        {!gameError && 
-        <DivError>
+        {!gameError &&
+          <DivError>
             <Img src={emptyImage2} alt="No characters available" />
-            <Span2>{nameError? 'Error! revise el formulario':'Error! el juego ya existe'}</Span2>
+            <Span2>{nameError ? 'Error! revise el formulario' : 'Error! el juego ya existe'}</Span2>
           </DivError>}
         <Button type="submit" disabled={!formComplete} complete={formComplete}>
           Crear juego
         </Button>
-      </form> 
+      </form>
     </div>
   )
 }
